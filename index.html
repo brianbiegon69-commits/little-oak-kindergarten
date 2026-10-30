@@ -392,5 +392,24 @@ label.check input { width: auto; margin-top: 4px; }
   })();
 </script>
 
+<script>
+  // Tawk.to live chat. Paste your Property ID and Widget ID from tawk.to
+  // (Administration > Channels > Chat Widget > Direct Chat Link / Widget Code).
+  // Chat stays off until both are filled in.
+  (function () {
+    var TAWK_PROPERTY_ID = '';
+    var TAWK_WIDGET_ID = '';
+    if (!TAWK_PROPERTY_ID || !TAWK_WIDGET_ID) { return; }
+    window.Tawk_API = window.Tawk_API || {};
+    window.Tawk_LoadStart = new Date();
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://embed.tawk.to/' + TAWK_PROPERTY_ID + '/' + TAWK_WIDGET_ID;
+    s.charset = 'UTF-8';
+    s.setAttribute('crossorigin', '*');
+    document.head.appendChild(s);
+  })();
+</script>
+
 </body>
 </html>
