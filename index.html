@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}</style>
+<title>Little Oak Kindergarten</title>
+<meta name="description" content="Little Oak is a small-class private kindergarten in Austin, Texas. Register online, see tuition, and tour a classroom.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: single scrolling site. Hero with stacked alphabet blocks, a true day-timeline, program cards, tuition table, inquiry form. */
+:root {
+  --bg: #f4f8f3;
+  --surface: #ffffff;
+  --ink: #15302b;
+  --muted: #4f6b64;
+  --line: #d3e0d9;
+  --accent: #f0a30a;
+  --accent-ink: #2b1d00;
+  --leaf: #1f6b57;
+  --sky: #cfe6f2;
+  --block-a: #f0a30a;
+  --block-b: #3b82c4;
+  --block-c: #d9534f;
+  --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1d1a; --surface: #162825; --ink: #e8f2ee; --muted: #9ab5ac; --line: #28413b;
+    --accent: #f5b83a; --accent-ink: #2b1d00; --leaf: #6fcfb0; --sky: #1d3a4a;
+    --block-a: #f5b83a; --block-b: #6aa9e0; --block-c: #ec7b77;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1d1a; --surface: #162825; --ink: #e8f2ee; --muted: #9ab5ac; --line: #28413b;
+  --accent: #f5b83a; --accent-ink: #2b1d00; --leaf: #6fcfb0; --sky: #1d3a4a;
+  --block-a: #f5b83a; --block-b: #6aa9e0; --block-c: #ec7b77;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font: 16px/1.6 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+.wrap { max-width: 1040px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.4rem, 7vw, 4.4rem); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 1.2rem; font-weight: 700; }
+p { margin: 0; max-width: 62ch; }
+a { color: var(--leaf); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.eyebrow { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: var(--leaf); }
+
+nav { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; padding-block: 18px; }
+.brand { font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.brand svg { width: 28px; height: 28px; }
+nav ul { display: flex; flex-wrap: wrap; gap: 6px 20px; list-style: none; margin: 0; padding: 0; }
+nav ul a { color: var(--muted); text-decoration: none; font-weight: 500; }
+nav ul a:hover { color: var(--ink); }
+
+.hero { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center; padding-block: 36px 56px; }
+.hero p.lead { font-size: 1.15rem; color: var(--muted); margin-top: 20px; }
+.hero .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.btn { display: inline-block; padding: 13px 22px; border-radius: 10px; font-weight: 600; text-decoration: none; border: 2px solid var(--ink); color: var(--ink); background: transparent; font-family: inherit; font-size: 1rem; cursor: pointer; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn:hover { transform: translateY(-1px); }
+.blocks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 360px; justify-self: center; width: 100%; }
+.blk { aspect-ratio: 1; border-radius: 14px; display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: clamp(2.2rem, 8vw, 3.6rem); color: #fff; box-shadow: 0 5px 0 rgba(0,0,0,.18); }
+.blk.a { background: var(--block-a); color: var(--accent-ink); transform: rotate(-4deg); }
+.blk.b { background: var(--block-b); transform: rotate(3deg); margin-top: 18px; }
+.blk.c { background: var(--block-c); transform: rotate(-2deg); }
+.blk.one { background: var(--leaf); color: var(--bg); transform: rotate(2deg); }
+.blk.two { background: var(--sky); color: var(--ink); transform: rotate(-3deg); margin-top: 10px; }
+.blk.three { background: var(--surface); color: var(--ink); border: 2px solid var(--line); transform: rotate(4deg); }
+
+section { padding-block: 56px; border-top: 1px solid var(--line); }
+.sec-head { display: grid; gap: 10px; margin-bottom: 32px; }
+.sec-head p { color: var(--muted); }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.card p { color: var(--muted); font-size: .96rem; }
+.tag { justify-self: start; font-size: .75rem; font-weight: 600; background: var(--sky); color: var(--ink); padding: 3px 10px; border-radius: 99px; }
+
+.day { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; max-width: 720px; }
+.day li { display: grid; grid-template-columns: 92px 1fr; gap: 18px; padding: 14px 0; border-bottom: 1px dashed var(--line); }
+.day time { font-family: var(--font-display); font-weight: 700; color: var(--leaf); font-variant-numeric: tabular-nums; }
+.day strong { display: block; }
+.day span { color: var(--muted); font-size: .95rem; }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+table { width: 100%; border-collapse: collapse; min-width: 520px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+th { font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+tr:last-child td { border-bottom: 0; }
+td.num { font-family: var(--font-display); font-weight: 700; }
+.note { font-size: .9rem; color: var(--muted); margin-top: 14px; }
+
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+form { display: grid; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px; min-width: 0; }
+label { display: grid; gap: 6px; font-weight: 600; font-size: .92rem; }
+input, select, textarea { font: inherit; padding: 11px 12px; border-radius: 8px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); width: 100%; }
+textarea { min-height: 90px; resize: vertical; }
+#msg { font-size: .92rem; color: var(--leaf); font-weight: 600; min-height: 1.4em; }
+.facts { display: grid; gap: 18px; align-content: start; }
+.facts dl { margin: 0; display: grid; gap: 14px; }
+.facts dt { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.facts dd { margin: 2px 0 0; font-size: 1.05rem; }
+
+footer { border-top: 1px solid var(--line); padding-block: 28px 40px; color: var(--muted); font-size: .88rem; display: grid; gap: 6px; }
+
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.two > label { min-width: 0; }
+label.check { display: flex; gap: 10px; align-items: flex-start; font-weight: 500; }
+label.check input { width: auto; margin-top: 4px; }
+.msg { font-size: .92rem; font-weight: 600; min-height: 1.4em; color: var(--leaf); }
+.pay { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 16px; }
+.pay strong { margin-right: 4px; }
+#admin, #admin-reg { background: var(--surface); }
+#admin .rows { display: grid; gap: 10px; }
+.inq { border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; background: var(--bg); display: grid; gap: 4px; min-width: 0; overflow-wrap: anywhere; }
+.inq .top { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+.inq .who { font-weight: 600; }
+.inq .meta { color: var(--muted); font-size: .85rem; }
+.empty { color: var(--muted); border: 1px dashed var(--line); border-radius: 12px; padding: 18px; }
+@media (max-width: 760px) {
+  .hero, .split, .two { grid-template-columns: 1fr; }
+  .day li { grid-template-columns: 74px 1fr; gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .btn:hover { transform: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="#top" id="top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="13" r="10" fill="var(--leaf)"/><rect x="14" y="20" width="4" height="10" rx="1.5" fill="var(--accent)"/><circle cx="12" cy="11" r="3" fill="var(--bg)" opacity=".35"/></svg>
+      Little Oak Kindergarten
+    </a>
+    <ul>
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#day">A day here</a></li>
+      <li><a href="#tuition">Tuition</a></li>
+      <li><a href="#register">Register</a></li>
+      <li><a href="#visit">Visit us</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Now enrolling ages 5 to 6 · Fall 2027</p>
+      <h1>Small classes. Big first year of school.</h1>
+      <p class="lead">Little Oak is a private kindergarten with a maximum of 16 children per class. We teach reading, number sense, and friendship through play, projects, and plenty of time outside.</p>
+      <div class="cta">
+        <a class="btn primary" href="#register">Register online</a>
+        <a class="btn" href="#visit">Tour information</a>
+        <a class="btn" href="#tuition">See tuition</a>
+      </div>
+    </div>
+    <div class="blocks" aria-hidden="true">
+      <div class="blk a">A</div><div class="blk b">B</div><div class="blk c">C</div>
+      <div class="blk one">1</div><div class="blk two">2</div><div class="blk three">3</div>
+    </div>
+  </header>
+
+  <section id="programs">
+    <div class="sec-head">
+      <p class="eyebrow">Programs</p>
+      <h2>Three ways to start the year</h2>
+      <p>Every schedule includes the same core curriculum. Pick the length of day that fits your family.</p>
+    </div>
+    <div class="cards">
+      <article class="card"><span class="tag">8:30 – 12:00</span><h3>Half-day</h3><p>Literacy, math, and outdoor play, finishing before lunch. A gentle first step for children new to a full school routine.</p></article>
+      <article class="card"><span class="tag">8:30 – 3:00</span><h3>Full-day</h3><p>The complete program with lunch, quiet reading, art, and music. Most of our families choose this schedule.</p></article>
+      <article class="card"><span class="tag">7:30 – 6:00</span><h3>Full-day plus extended care</h3><p>Full-day program with supervised morning and afternoon care for working parents.</p></article>
+    </div>
+  </section>
+
+  <section id="day">
+    <div class="sec-head">
+      <p class="eyebrow">A day here</p>
+      <h2>What a full day looks like</h2>
+      <p>The rhythm stays the same each day, so children know what comes next.</p>
+    </div>
+    <ol class="day">
+      <li><time>8:15</time><div><strong>Arrival and free choice</strong><span>Puzzles, blocks, and books while friends trickle in.</span></div></li>
+      <li><time>8:45</time><div><strong>Morning circle</strong><span>Calendar, weather, songs, and the plan for the day.</span></div></li>
+      <li><time>9:15</time><div><strong>Reading and writing</strong><span>Letter sounds, first words, and a daily page in a journal.</span></div></li>
+      <li><time>10:15</time><div><strong>Snack and outdoor play</strong><span>Garden beds, climbing frame, and open field.</span></div></li>
+      <li><time>11:00</time><div><strong>Math workshop</strong><span>Counting, patterns, and shapes with real objects.</span></div></li>
+      <li><time>12:00</time><div><strong>Lunch and recess</strong><span>Children eat together, then run it off.</span></div></li>
+      <li><time>12:45</time><div><strong>Quiet reading</strong><span>Rest, story time, or looking at picture books alone.</span></div></li>
+      <li><time>1:15</time><div><strong>Art, music, or science</strong><span>A different studio each weekday.</span></div></li>
+      <li><time>2:30</time><div><strong>Pack up and closing circle</strong><span>Each child shares one thing they learned.</span></div></li>
+      <li><time>3:00</time><div><strong>Dismissal</strong><span>Pickup at the front gate.</span></div></li>
+    </ol>
+  </section>
+
+  <section id="tuition">
+    <div class="sec-head">
+      <p class="eyebrow">Tuition</p>
+      <h2>Clear pricing for the school year</h2>
+      <p>Tuition is billed over 10 months, September to June.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Program</th><th>Per month</th><th>Per year</th></tr></thead>
+        <tbody>
+          <tr><td>Half-day</td><td class="num">$650</td><td class="num">$6,500</td></tr>
+          <tr><td>Full-day</td><td class="num">$1,100</td><td class="num">$11,000</td></tr>
+          <tr><td>Full-day plus extended care</td><td class="num">$1,450</td><td class="num">$14,500</td></tr>
+          <tr><td>One-time registration fee</td><td class="num">$150</td><td class="num">$150</td></tr>
+          <tr><td>Enrollment deposit (refundable)</td><td class="num">$500</td><td class="num">$500</td></tr>
+          <tr><td>Tour fee (registered families)</td><td class="num">$25</td><td class="num">$25</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">All payments are made online; we do not accept cash. The $500 enrollment deposit is refundable. Add your refund terms, sibling discount, and payment plan details here.</p>
+    <div class="pay" aria-label="Ways to pay online">
+      <strong>Ways to pay online:</strong>
+      <span class="tag">Credit and debit cards</span>
+      <span class="tag">Apple Pay</span>
+      <span class="tag">Google Pay</span>
+      <span class="tag">US bank account (ACH)</span>
+    </div>
+  </section>
+
+  <section id="register">
+    <div class="sec-head">
+      <p class="eyebrow">Register</p>
+      <h2>Register your child for Fall 2027</h2>
+      <p>Use one form per child. Registration is complete when you pay the $150 registration fee and the refundable $500 enrollment deposit ($650 total) on the secure checkout page that opens next. We do not accept cash.</p>
+    </div>
+    <form id="regform" novalidate style="max-width:720px">
+      <div class="two">
+        <label for="c-first">Child's first name<input id="c-first" autocomplete="off" required></label>
+        <label for="c-last">Child's last name<input id="c-last" autocomplete="off" required></label>
+      </div>
+      <div class="two">
+        <label for="c-dob">Child's date of birth<input id="c-dob" type="date" required></label>
+        <label for="c-program">Program
+          <select id="c-program"><option>Half-day</option><option selected>Full-day</option><option>Full-day plus extended care</option></select>
+        </label>
+      </div>
+      <div class="two">
+        <label for="g-name">Parent or guardian name<input id="g-name" autocomplete="off" required></label>
+        <label for="g-phone">Phone<input id="g-phone" type="tel" autocomplete="off" required></label>
+      </div>
+      <label for="g-email">Parent or guardian email<input id="g-email" type="email" autocomplete="off" required></label>
+      <div class="two">
+        <label for="e-name">Emergency contact name<input id="e-name" autocomplete="off" required></label>
+        <label for="e-phone">Emergency contact phone<input id="e-phone" type="tel" autocomplete="off" required></label>
+      </div>
+      <label for="c-med">Allergies or health needs we should know about<textarea id="c-med"></textarea></label>
+      <label class="check" for="c-ok"><input id="c-ok" type="checkbox"><span>I confirm this information is accurate. Immunization records are collected separately before the first day.</span></label>
+      <button class="btn primary" type="submit">Continue to payment ($650)</button>
+      <div id="regmsg" role="status" class="msg"></div>
+      <p class="note" style="margin-top:0">We use this information only to enroll your child and contact your family.</p>
+    </form>
+  </section>
+
+  <section id="visit">
+    <div class="split">
+      <div class="facts">
+        <div class="sec-head" style="margin-bottom:0">
+          <p class="eyebrow">Visit us</p>
+          <h2>Come see a classroom</h2>
+          <p>Tours are for families who have already registered, and a $25 tour fee applies, paid online when you request a tour. Use the same email you registered with. Tours take 30 minutes and run on weekday mornings while class is in session.</p>
+        </div>
+        <dl>
+          <div><dt>Location</dt><dd>Austin, Texas</dd></div>
+          <div><dt>Address and phone</dt><dd>Shared with registered families</dd></div>
+          <div><dt>Questions</dt><dd>Register online and we will contact you by email</dd></div>
+          <div><dt>Tour days</dt><dd>Weekday mornings, by appointment</dd></div>
+        </dl>
+      </div>
+      <form id="inquiry" novalidate>
+        <label for="parent">Parent or guardian name<input id="parent" name="parent" autocomplete="name" required></label>
+        <label for="email">Email<input id="email" name="email" type="email" autocomplete="email" required></label>
+        <label for="program">Program of interest
+          <select id="program" name="program">
+            <option>Half-day</option><option selected>Full-day</option><option>Full-day plus extended care</option>
+          </select>
+        </label>
+        <label for="note">Anything we should know?<textarea id="note" name="note"></textarea></label>
+        <button class="btn primary" type="submit">Pay $25 and request a tour</button>
+        <div id="msg" role="status"></div>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div>© 2027 Little Oak Kindergarten · <a href="/privacy.html">Privacy notice</a> · Austin, Texas.</div>
+    <div>Texas private school. Add your accreditation body and any HHSC license or exemption details here before opening.</div>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    function el(id) { return document.getElementById(id); }
+    function val(id) { return el(id).value.trim(); }
+    function show(node, text, bad) { node.style.color = bad ? 'var(--block-c)' : 'var(--leaf)'; node.textContent = text; }
+
+    async function startCheckout(payload, msgNode, btn) {
+      btn.disabled = true;
+      show(msgNode, 'Opening secure checkout...', false);
+      try {
+        var r = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        var d = await r.json().catch(function () { return {}; });
+        if (!r.ok || !d.url) { throw new Error(d.error || 'Checkout could not start. Please try again.'); }
+        window.location.href = d.url;
+      } catch (err) {
+        show(msgNode, err.message || 'Checkout could not start. Please try again.', true);
+        btn.disabled = false;
+      }
+    }
+
+    var regform = el('regform');
+    regform.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var msgNode = el('regmsg');
+      var dob = val('c-dob');
+      var d = dob ? new Date(dob) : null;
+      if (!val('c-first') || !val('c-last') || !d || isNaN(d) || d > new Date()) { show(msgNode, "Enter your child's first name, last name, and a valid date of birth.", true); return; }
+      if (!val('g-name') || !val('g-phone') || val('g-email').indexOf('@') < 1) { show(msgNode, 'Enter a parent or guardian name, phone number, and valid email.', true); return; }
+      if (!val('e-name') || !val('e-phone')) { show(msgNode, 'Enter an emergency contact name and phone number.', true); return; }
+      if (!el('c-ok').checked) { show(msgNode, 'Tick the box to confirm the information is accurate.', true); return; }
+      startCheckout({
+        type: 'registration',
+        child: { first: val('c-first'), last: val('c-last'), dob: dob, program: val('c-program'), allergies: val('c-med') },
+        guardian: { name: val('g-name'), phone: val('g-phone'), email: val('g-email'), emergencyName: val('e-name'), emergencyPhone: val('e-phone') }
+      }, msgNode, regform.querySelector('button[type="submit"]'));
+    });
+
+    var form = el('inquiry');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var msgNode = el('msg');
+      if (!val('parent') || val('email').indexOf('@') < 1) { show(msgNode, 'Enter your name and the email you registered with.', true); return; }
+      startCheckout({
+        type: 'tour', parent: val('parent'), email: val('email'), program: val('program'), note: val('note')
+      }, msgNode, form.querySelector('button[type="submit"]'));
+    });
+  })();
+</script>
+
+</body>
+</html>
