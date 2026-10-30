@@ -82,6 +82,10 @@ section { padding-block: 56px; border-top: 1px solid var(--line); }
 .sec-head { display: grid; gap: 10px; margin-bottom: 32px; }
 .sec-head p { color: var(--muted); }
 
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.shot { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.shot img { display: block; width: 100%; height: auto; }
+.shot figcaption { padding: 12px 16px; font-weight: 600; font-size: .95rem; }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 8px; align-content: start; min-width: 0; }
 .card p { color: var(--muted); font-size: .96rem; }
@@ -146,6 +150,7 @@ label.check input { width: auto; margin-top: 4px; }
       <li><a href="#programs">Programs</a></li>
       <li><a href="#day">A day here</a></li>
       <li><a href="#menu">Menu</a></li>
+      <li><a href="#gallery">Gallery</a></li>
       <li><a href="#tuition">Tuition</a></li>
       <li><a href="#register">Register</a></li>
       <li><a href="#visit">Visit us</a></li>
@@ -200,6 +205,22 @@ label.check input { width: auto; margin-top: 4px; }
       <li><time>2:30</time><div><strong>Pack up and closing circle</strong><span>Each child shares one thing they learned.</span></div></li>
       <li><time>3:00</time><div><strong>Dismissal</strong><span>Pickup at the front gate.</span></div></li>
     </ol>
+  </section>
+
+  <section id="gallery">
+    <div class="sec-head">
+      <p class="eyebrow">Gallery</p>
+      <h2>A look around Little Oak</h2>
+      <p>These are illustrations of the spaces children use each day. Tour photos are shared with registered families.</p>
+    </div>
+    <div class="gallery">
+      <figure class="shot"><img src="/images/building.svg" alt="Illustration: the school entrance" loading="lazy" width="640" height="420"><figcaption>The school entrance</figcaption></figure>
+      <figure class="shot"><img src="/images/classroom.svg" alt="Illustration: our classroom" loading="lazy" width="640" height="420"><figcaption>Our classroom</figcaption></figure>
+      <figure class="shot"><img src="/images/reading.svg" alt="Illustration: the reading corner" loading="lazy" width="640" height="420"><figcaption>The reading corner</figcaption></figure>
+      <figure class="shot"><img src="/images/art.svg" alt="Illustration: art studio" loading="lazy" width="640" height="420"><figcaption>Art studio</figcaption></figure>
+      <figure class="shot"><img src="/images/garden.svg" alt="Illustration: garden and play area" loading="lazy" width="640" height="420"><figcaption>Garden and play area</figcaption></figure>
+      <figure class="shot"><img src="/images/lunch.svg" alt="Illustration: lunch at the table" loading="lazy" width="640" height="420"><figcaption>Lunch at the table</figcaption></figure>
+    </div>
   </section>
 
   <section id="menu">
