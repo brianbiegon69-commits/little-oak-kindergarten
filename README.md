@@ -3,7 +3,7 @@
 A static site (`index.html`, `success.html`) plus one serverless function (`api/checkout.js`) that opens Stripe Checkout.
 
 ## How it works
-- Registration: the family fills in the form, then pays $150 registration fee + $500 refundable deposit on Stripe Checkout. The registration details are stored on the Stripe payment (metadata), so a paid registration is a succeeded payment with `type = registration`.
+- Registration: the family fills in the form, then pays the compulsory $150 registration fee on Stripe Checkout. The $500 refundable enrollment deposit is a separate payment (Enroll section) that is only accepted after a paid registration with the same email. The registration details are stored on the Stripe payment (metadata), so a paid registration is a succeeded payment with `type = registration`.
 - Tours: the family enters the email they registered with and pays the $25 tour fee. The function checks Stripe for a succeeded registration payment with that email first.
 - Payment methods shown at checkout come from your Stripe Dashboard settings (Settings > Payment methods). Turn on cards, Apple Pay, Google Pay, and ACH bank payments there.
 

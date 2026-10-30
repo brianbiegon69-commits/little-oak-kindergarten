@@ -257,8 +257,8 @@ label.check input { width: auto; margin-top: 4px; }
           <tr><td>Half-day</td><td class="num">$650</td><td class="num">$6,500</td></tr>
           <tr><td>Full-day</td><td class="num">$1,100</td><td class="num">$11,000</td></tr>
           <tr><td>Full-day plus extended care</td><td class="num">$1,450</td><td class="num">$14,500</td></tr>
-          <tr><td>One-time registration fee</td><td class="num">$150</td><td class="num">$150</td></tr>
-          <tr><td>Enrollment deposit (refundable)</td><td class="num">$500</td><td class="num">$500</td></tr>
+          <tr><td>One-time registration fee (required)</td><td class="num">$150</td><td class="num">$150</td></tr>
+          <tr><td>Enrollment deposit (refundable, paid separately after registration)</td><td class="num">$500</td><td class="num">$500</td></tr>
           <tr><td>Tour fee (registered families)</td><td class="num">$25</td><td class="num">$25</td></tr>
         </tbody>
       </table>
@@ -277,7 +277,7 @@ label.check input { width: auto; margin-top: 4px; }
     <div class="sec-head">
       <p class="eyebrow">Register</p>
       <h2>Register your child for Fall 2027</h2>
-      <p>Use one form per child. Registration is complete when you pay the $150 registration fee and the refundable $500 enrollment deposit ($650 total) on the secure checkout page that opens next. We do not accept cash.</p>
+      <p>Use one form per child. The $150 registration fee is required and is paid on the secure checkout page that opens next. Your child is registered once it is paid. The refundable $500 enrollment deposit is a separate payment, made afterwards. We do not accept cash.</p>
     </div>
     <form id="regform" novalidate style="max-width:720px">
       <div class="two">
@@ -301,9 +301,26 @@ label.check input { width: auto; margin-top: 4px; }
       </div>
       <label for="c-med">Allergies or health needs we should know about<textarea id="c-med"></textarea></label>
       <label class="check" for="c-ok"><input id="c-ok" type="checkbox"><span>I confirm this information is accurate. Immunization records are collected separately before the first day.</span></label>
-      <button class="btn primary" type="submit">Continue to payment ($650)</button>
+      <button class="btn primary" type="submit">Continue to payment ($150 registration fee)</button>
       <div id="regmsg" role="status" class="msg"></div>
       <p class="note" style="margin-top:0">We use this information only to enroll your child and contact your family.</p>
+    </form>
+  </section>
+
+  <section id="enroll">
+    <div class="sec-head">
+      <p class="eyebrow">Enroll</p>
+      <h2>Secure your child's place</h2>
+      <p>After the registration fee is paid, pay the refundable $500 enrollment deposit here. Use the same email you registered with. The deposit cannot be paid until the registration fee has been paid.</p>
+    </div>
+    <form id="enrollform" novalidate style="max-width:720px">
+      <div class="two">
+        <label for="en-parent">Parent or guardian name<input id="en-parent" autocomplete="name" required></label>
+        <label for="en-child">Child's first name<input id="en-child" autocomplete="off" required></label>
+      </div>
+      <label for="en-email">Email used to register<input id="en-email" type="email" autocomplete="email" required></label>
+      <button class="btn primary" type="submit">Pay $500 enrollment deposit</button>
+      <div id="enmsg" role="status" class="msg"></div>
     </form>
   </section>
 
@@ -378,6 +395,14 @@ label.check input { width: auto; margin-top: 4px; }
         child: { first: val('c-first'), last: val('c-last'), dob: dob, program: val('c-program'), allergies: val('c-med') },
         guardian: { name: val('g-name'), phone: val('g-phone'), email: val('g-email'), emergencyName: val('e-name'), emergencyPhone: val('e-phone') }
       }, msgNode, regform.querySelector('button[type="submit"]'));
+    });
+
+    var enrollform = el('enrollform');
+    enrollform.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var msgNode = el('enmsg');
+      if (!val('en-parent') || !val('en-child') || val('en-email').indexOf('@') < 1) { show(msgNode, 'Enter your name, your child\'s first name, and the email you registered with.', true); return; }
+      startCheckout({ type: 'enrollment', parent: val('en-parent'), childFirst: val('en-child'), email: val('en-email') }, msgNode, enrollform.querySelector('button[type="submit"]'));
     });
 
     var form = el('inquiry');

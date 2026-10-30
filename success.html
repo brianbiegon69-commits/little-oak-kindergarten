@@ -24,7 +24,10 @@
   var t = new URLSearchParams(location.search).get('type');
   if (t === 'registration') {
     document.getElementById('h').textContent = 'Registration complete';
-    document.getElementById('p').textContent = 'Thank you. We received your registration and payment, and a receipt is on its way to your email. We will contact you to confirm the spot and arrange immunization records.';
+    document.getElementById('p').textContent = 'Thank you. We received your registration fee, and a receipt is on its way to your email. Next, pay the refundable enrollment deposit on our website to secure the place. We will also contact you about immunization records.';
+  } else if (t === 'enrollment') {
+    document.getElementById('h').textContent = 'Deposit received';
+    document.getElementById('p').textContent = 'Thank you. Your enrollment deposit is paid and a receipt is on its way to your email. We will contact you to confirm your child\'s place.';
   } else if (t === 'tour') {
     document.getElementById('h').textContent = 'Tour fee received';
     document.getElementById('p').textContent = 'Thank you. We will email you a tour time. A receipt is on its way to your email.';

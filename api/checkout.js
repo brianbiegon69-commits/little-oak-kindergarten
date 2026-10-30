@@ -3,7 +3,7 @@
 const Stripe = require('stripe');
 
 const REGISTRATION_FEE_CENTS = 15000; // $150
-const DEPOSIT_CENTS = 50000;          // $500, refundable
+const DEPOSIT_CENTS = 50000;          // $500 enrollment deposit, refundable, paid separately after registration
 const TOUR_FEE_CENTS = 2500;          // $25 placeholder
 
 const PROGRAMS = ['Half-day', 'Full-day', 'Full-day plus extended care'];
@@ -71,7 +71,6 @@ module.exports = async (req, res) => {
         customer_email: email,
         line_items: [
           lineItem('Registration fee', REGISTRATION_FEE_CENTS),
-          lineItem('Enrollment deposit (refundable)', DEPOSIT_CENTS),
         ],
         metadata: meta,
         payment_intent_data: {
@@ -80,6 +79,41 @@ module.exports = async (req, res) => {
         },
         success_url: `${origin}/success.html?type=registration`,
         cancel_url: `${origin}/#register`,
+      });
+      return res.status(200).json({ url: session.url });
+    }
+
+    if (body.type === 'enrollment') {
+      const email = clean(body.email, 200).toLowerCase();
+      const name = clean(body.parent, 150);
+      const childFirst = clean(body.childFirst, 100);
+      if (!name || !childFirst || !validEmail(email)) {
+        return res.status(400).json({ error: 'Enter your name, your child\'s first name, and the email you registered with.' });
+      }
+      // The registration fee is compulsory: the deposit can only be paid after it.
+      const found = await stripe.paymentIntents.search({
+        query: `status:'succeeded' AND metadata['type']:'registration' AND metadata['guardian_email']:'${email}'`,
+        limit: 1,
+      });
+      if (!found.data.length) {
+        return res.status(403).json({
+          error: 'The registration fee must be paid first. Please register, using the same email.',
+        });
+      }
+      const meta = {
+        type: 'enrollment',
+        guardian_name: name,
+        guardian_email: email,
+        child_first: childFirst,
+      };
+      const session = await stripe.checkout.sessions.create({
+        mode: 'payment',
+        customer_email: email,
+        line_items: [lineItem('Enrollment deposit (refundable)', DEPOSIT_CENTS)],
+        metadata: meta,
+        payment_intent_data: { description: `Enrollment deposit: ${childFirst}`, metadata: meta },
+        success_url: `${origin}/success.html?type=enrollment`,
+        cancel_url: `${origin}/#enroll`,
       });
       return res.status(200).json({ url: session.url });
     }
