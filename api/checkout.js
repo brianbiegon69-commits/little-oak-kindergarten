@@ -66,12 +66,15 @@ module.exports = async (req, res) => {
       if (!meta.emergency_name || !meta.emergency_phone) {
         return res.status(400).json({ error: 'Enter an emergency contact name and phone number.' });
       }
+      // The registration fee is always charged. The deposit is optional here.
+      const withDeposit = body.includeDeposit === true;
+      meta.deposit_paid_with_registration = withDeposit ? 'yes' : 'no';
+      const line_items = [lineItem('Registration fee', REGISTRATION_FEE_CENTS)];
+      if (withDeposit) { line_items.push(lineItem('Enrollment deposit (refundable)', DEPOSIT_CENTS)); }
       const session = await stripe.checkout.sessions.create({
         mode: 'payment',
         customer_email: email,
-        line_items: [
-          lineItem('Registration fee', REGISTRATION_FEE_CENTS),
-        ],
+        line_items,
         metadata: meta,
         payment_intent_data: {
           description: `Registration: ${meta.child_first} ${meta.child_last}`,

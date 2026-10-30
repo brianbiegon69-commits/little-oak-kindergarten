@@ -301,7 +301,8 @@ label.check input { width: auto; margin-top: 4px; }
       </div>
       <label for="c-med">Allergies or health needs we should know about<textarea id="c-med"></textarea></label>
       <label class="check" for="c-ok"><input id="c-ok" type="checkbox"><span>I confirm this information is accurate. Immunization records are collected separately before the first day.</span></label>
-      <button class="btn primary" type="submit">Continue to payment ($150 registration fee)</button>
+      <label class="check" for="c-dep"><input id="c-dep" type="checkbox"><span>Also pay the refundable $500 enrollment deposit now (optional). You can pay it later in the Enroll section instead.</span></label>
+      <button class="btn primary" type="submit" id="regbtn">Continue to payment ($150 registration fee)</button>
       <div id="regmsg" role="status" class="msg"></div>
       <p class="note" style="margin-top:0">We use this information only to enroll your child and contact your family.</p>
     </form>
@@ -381,6 +382,9 @@ label.check input { width: auto; margin-top: 4px; }
     }
 
     var regform = el('regform');
+    el('c-dep').addEventListener('change', function () {
+      el('regbtn').textContent = this.checked ? 'Continue to payment ($650: registration fee and deposit)' : 'Continue to payment ($150 registration fee)';
+    });
     regform.addEventListener('submit', function (e) {
       e.preventDefault();
       var msgNode = el('regmsg');
@@ -393,6 +397,7 @@ label.check input { width: auto; margin-top: 4px; }
       startCheckout({
         type: 'registration',
         child: { first: val('c-first'), last: val('c-last'), dob: dob, program: val('c-program'), allergies: val('c-med') },
+        includeDeposit: el('c-dep').checked,
         guardian: { name: val('g-name'), phone: val('g-phone'), email: val('g-email'), emergencyName: val('e-name'), emergencyPhone: val('e-phone') }
       }, msgNode, regform.querySelector('button[type="submit"]'));
     });
